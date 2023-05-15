@@ -31,7 +31,7 @@ const makeStyles = (col: typeof Colors.light, sum: number) =>
     },
     headerContainer: {
       marginTop: 24,
-      marginBottom: 16,
+      marginBottom: 24,
       marginHorizontal: 24,
       flexDirection: "row",
       alignItems: "center",

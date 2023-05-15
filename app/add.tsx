@@ -154,12 +154,14 @@ export default () => {
             errorRes={hasValueError ? "errorValueInvalid" : undefined}
           />
           <IconSelector />
-          <View style={{ flex: 1 }} />
+        </ScrollView>
+        <View style={{ height: 16 }} />
+        <View style={styles.btnSaveContainer}>
           <SaveButton
             active={!hasTitleError && !hasValueError}
             onPress={saveAsset}
           />
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </View>
   );
@@ -175,10 +177,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  btnSaveContainer: {
+    marginBottom: 24,
+    marginTop: 8,
+    marginHorizontal: 24,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 40,
-    paddingBottom: 24,
   },
 });

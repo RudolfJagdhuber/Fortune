@@ -26,7 +26,6 @@ const makeStyles = (col: typeof Colors.light, active: boolean) =>
   StyleSheet.create({
     container: {
       height: 56,
-      marginTop: 40,
       backgroundColor: active ? col.buttonPrimary : col.tabIconDefault,
       borderRadius: 4,
       justifyContent: "center",

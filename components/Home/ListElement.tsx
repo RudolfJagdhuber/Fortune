@@ -15,7 +15,7 @@ export default ({
   onPress: () => void;
 }) => {
   const col = Colors[useColorScheme() ?? "light"];
-  const styles = makeStyles(col);
+  const styles = makeStyles(col, data.value > 0);
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.outerContainer}>
@@ -39,28 +39,23 @@ export default ({
   );
 };
 
-const makeStyles = (col: typeof Colors.light) =>
+const makeStyles = (col: typeof Colors.light, positive: boolean) =>
   StyleSheet.create({
     icon: {
       color: col.text,
     },
     outerContainer: {
-      marginTop: 8,
       marginHorizontal: 24,
+      marginBottom: 4,
       flexDirection: "row",
       alignItems: "center",
       height: 64,
       padding: 16,
       gap: 16,
-      backgroundColor: col.boxFill,
-      borderColor: col.boxOutline,
+      backgroundColor: positive ? col.boxPositive : col.boxNegative,
+      borderColor: positive ? col.boxOutlinePositive : col.boxOutlineNegative,
       borderRadius: 8,
       borderWidth: 1,
-      shadowColor: col.dropShadow,
-      shadowOpacity: 0.5,
-      shadowOffset: { width: 1, height: 2 },
-      shadowRadius: 4,
-      elevation: 2,
     },
     subtitleText: {
       fontSize: 12,
