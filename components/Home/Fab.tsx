@@ -4,12 +4,13 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "../../constants/Colors";
 import { View } from "../Themed";
+import { IconRes } from "../../constants/Interfaces";
 
 export default ({
   iconRes,
   onPress,
 }: {
-  iconRes: React.ComponentProps<typeof FontAwesome>["name"];
+  iconRes: IconRes;
   onPress: () => void;
 }) => {
   const styles = makeStyles(Colors[useColorScheme() ?? "light"]);

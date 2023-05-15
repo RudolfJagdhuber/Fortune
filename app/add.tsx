@@ -27,7 +27,7 @@ export default () => {
     ? JSON.parse(data)
     : {
         key: uuid.v4().toString(),
-        icon: "plus",
+        icon: "money",
         title: "",
         subtitle: "",
         value: 0,
@@ -153,9 +153,8 @@ export default () => {
             isPositive={isPositive}
             errorRes={hasValueError ? "errorValueInvalid" : undefined}
           />
-          <IconSelector />
+          <IconSelector icon={icon} setIcon={setIcon} />
         </ScrollView>
-        <View style={{ height: 16 }} />
         <View style={styles.btnSaveContainer}>
           <SaveButton
             active={!hasTitleError && !hasValueError}

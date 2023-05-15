@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import Colors from "../constants/Colors";
+import { IconRes } from "../constants/Interfaces";
 import { Text, View } from "./Themed";
 
 export default ({
@@ -11,7 +12,7 @@ export default ({
   onPress,
   active = false,
 }: {
-  iconRes: React.ComponentProps<typeof FontAwesome>["name"];
+  iconRes: IconRes;
   label?: string;
   onPress: () => void;
   active?: boolean;
@@ -20,7 +21,12 @@ export default ({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.buttonContainer}>
-        <FontAwesome name={iconRes} size={20} style={styles.buttonIcon} />
+        <FontAwesome
+          name={iconRes}
+          size={20}
+          style={[styles.buttonIcon, { marginTop: label ? 4 : 0 }]}
+        />
+
         {label && <Text style={styles.buttonLabel}>{label}</Text>}
       </View>
     </TouchableOpacity>
@@ -39,7 +45,6 @@ const makeStyles = (col: typeof Colors.light, active: boolean) =>
       borderRadius: 12,
     },
     buttonIcon: {
-      marginTop: 4,
       color: active ? col.buttonPrimaryContent : col.textLight,
     },
     buttonLabel: {

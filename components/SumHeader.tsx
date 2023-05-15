@@ -46,7 +46,7 @@ const makeStyles = (col: typeof Colors.light) =>
       fontFamily: "Inter_600SemiBold",
     },
     valueText: {
-      marginTop: 8,
+      marginTop: 4,
       fontSize: 32,
       fontFamily: "Inter_700Bold",
     },

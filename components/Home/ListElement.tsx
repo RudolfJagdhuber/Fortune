@@ -19,7 +19,9 @@ export default ({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.outerContainer}>
-        <FontAwesome name={data.icon} size={24} style={styles.icon} />
+        <View style={styles.iconContainer}>
+          <FontAwesome name={data.icon} size={20} style={styles.icon} />
+        </View>
         <View style={{ flex: 1, backgroundColor: "#00000000" }}>
           <Text style={styles.titleText}>{data.title}</Text>
           {data.description && (
@@ -43,6 +45,12 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
   StyleSheet.create({
     icon: {
       color: col.text,
+    },
+    iconContainer: {
+      width: 24,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "transparent",
     },
     outerContainer: {
       marginHorizontal: 24,
