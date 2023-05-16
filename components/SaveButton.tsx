@@ -1,14 +1,14 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 
-import Colors from "../../constants/Colors";
-import { localeString, Text, View } from "../Themed";
+import Colors from "../constants/Colors";
+import { localeString, Text, View } from "./Themed";
 
 export default ({
-  active,
+  active = true,
   onPress,
 }: {
-  active: boolean;
+  active?: boolean;
   onPress: () => void;
 }) => {
   const styles = makeStyles(Colors[useColorScheme() ?? "light"], active);

@@ -23,7 +23,7 @@ export default ({
         <Text style={styles.valueText}>{formatCurrency(sum)}</Text>
         <Text style={styles.dateText}>{date}</Text>
       </View>
-      <IconButton iconRes="save" label="Speichern" onPress={() => {}} />
+      <IconButton iconRes="save" label="Speichern" onPress={savePress} />
     </View>
   );
 };

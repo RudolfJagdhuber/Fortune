@@ -38,6 +38,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="area-chart" color={color} />
           ),
+          headerShown: false,
         }}
       />
     </Tabs>

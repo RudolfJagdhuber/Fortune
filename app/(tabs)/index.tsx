@@ -6,70 +6,80 @@ import {
   StyleSheet,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
+import { Md5 } from "ts-md5";
 import Fab from "../../components/Home/Fab";
 import Header from "../../components/Home/Header";
 import ListElement from "../../components/Home/ListElement";
-import { useFocusEffect } from "@react-navigation/native";
 import { sumAssets } from "../helpers";
 import SumHeader from "../../components/SumHeader";
 import { View } from "../../components/Themed";
-import { AssetElement } from "../../constants/Interfaces";
-import { useRouter } from "expo-router";
+import { AssetElement, TimelineElement } from "../../constants/Interfaces";
+import { useRouter, useSearchParams } from "expo-router";
+import uuid from "react-native-uuid";
 
 export default function HomeScreen() {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<AssetElement[]>([]);
+  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<AssetElement[]>();
 
-  const navigation = useRouter();
+  const router = useRouter();
+  const { newDataMd5 } = useSearchParams();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      AsyncStorage.getItem("data").then((raw_data) => {
-        if (raw_data != null && raw_data != "[]") {
-          setData(JSON.parse(raw_data));
-          console.log("Loaded data: " + raw_data);
-        } else {
-          setData([]);
-          console.log("No Stored Data found.");
+  const loadData = () => {
+    console.log("Load triggered!");
+    AsyncStorage.getItem("data").then((raw_data) => {
+      console.log("Load finished!");
+      if (raw_data != null && raw_data != "[]") {
+        setData(JSON.parse(raw_data));
+        // console.log("Loaded data: " + raw_data);
+      } else {
+        setData([]);
+        // console.log("No Stored Data found.");
+      }
+      setLoading(false);
+    });
+  };
 
-          // const EX_DATA: AssetElement[] = [
-          //   {
-          //     key: uuid.v4().toString(),
-          //     icon: "home",
-          //     title: "Sparkasse",
-          //     description: "Mein Girokonto",
-          //     value: 1234.59,
-          //     lastUpdate: "2023-01-01",
-          //   },
-          //   {
-          //     key: uuid.v4().toString(),
-          //     icon: "home",
-          //     title: "Splitwise",
-          //     value: -234.09,
-          //     lastUpdate: "2023-01-01",
-          //   },
-          // ];
-          // setData(EX_DATA);
-          // AsyncStorage.setItem("data", JSON.stringify(EX_DATA));
-          // console.log("Initialized and Stored Data!");
-        }
-        setLoading(false);
-      });
-    }, [])
-  );
+  if (!isLoading) {
+    if (data) {
+      console.log("Has data");
+      console.log("Old: " + Md5.hashStr(JSON.stringify(data)));
+      console.log("New: " + newDataMd5);
+      if (newDataMd5 && newDataMd5 !== Md5.hashStr(JSON.stringify(data))) {
+        setLoading(true);
+        console.log("Re-Loading!");
+        loadData();
+      }
+    } else {
+      setLoading(true);
+      console.log("No data");
+      loadData();
+    }
+  }
 
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        {isLoading ? (
+        {isLoading || !data ? (
           <ActivityIndicator style={{ flex: 1 }} />
         ) : (
           <View style={styles.container}>
             <SumHeader
               sum={sumAssets(data, "all")}
               date="24.01.2023"
-              savePress={() => alert("Hello")}
+              savePress={() => {
+                const timelineElem: TimelineElement = {
+                  key: uuid.v4().toString(),
+                  assets: data,
+                  date: new Date().toISOString(),
+                };
+                router.push({
+                  pathname: "/save",
+                  params: {
+                    data: JSON.stringify(timelineElem),
+                    isExisting: "false",
+                  },
+                });
+              }}
             />
             <View style={{ height: 16 }} />
             <ScrollView>
@@ -84,8 +94,8 @@ export default function HomeScreen() {
                     key={elem.title}
                     data={elem}
                     onPress={() => {
-                      setLoading(true);
-                      navigation.push({
+                      // setLoading(true);
+                      router.push({
                         pathname: "/add",
                         params: {
                           data: JSON.stringify(elem),
@@ -106,8 +116,7 @@ export default function HomeScreen() {
                     key={elem.title}
                     data={elem}
                     onPress={() => {
-                      setLoading(true);
-                      navigation.push({
+                      router.push({
                         pathname: "/add",
                         params: {
                           data: JSON.stringify(elem),
@@ -123,8 +132,8 @@ export default function HomeScreen() {
         <Fab
           iconRes="plus"
           onPress={() => {
-            setLoading(true);
-            navigation.push({ pathname: "/add" });
+            // setLoading(true);
+            router.push({ pathname: "/add" });
           }}
         />
       </SafeAreaView>

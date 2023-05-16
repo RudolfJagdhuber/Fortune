@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Md5 } from "ts-md5";
 import uuid from "react-native-uuid";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -16,11 +17,11 @@ import { Stack, useSearchParams } from "expo-router";
 import Switch from "../components/Add/Switch";
 import TextInput from "../components/Add/TextInput";
 import IconSelector from "../components/Add/IconSelector";
-import SaveButton from "../components/Add/SaveButton";
+import SaveButton from "../components/SaveButton";
 import Colors from "../constants/Colors";
 
 export default () => {
-  const navigation = useRouter();
+  const router = useRouter();
   const { data } = useSearchParams();
   const isExisting = data && typeof data === "string";
   const asset: AssetElement = isExisting
@@ -73,14 +74,16 @@ export default () => {
   const deleteAsset = () => {
     AsyncStorage.getItem("data").then((raw_data) => {
       console.log("Loaded Data: " + raw_data);
+      let storage: AssetElement[];
       if (raw_data != null && raw_data != "[]") {
-        const storage: AssetElement[] = JSON.parse(raw_data);
-        AsyncStorage.setItem(
-          "data",
-          JSON.stringify(storage.filter((obj) => obj.key !== asset.key))
-        );
-      }
-      navigation.back();
+        storage = JSON.parse(raw_data);
+        storage = storage.filter((obj) => obj.key !== asset.key);
+        AsyncStorage.setItem("data", JSON.stringify(storage));
+      } else return;
+      router.push({
+        pathname: "/",
+        params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+      });
     });
   };
 
@@ -88,20 +91,24 @@ export default () => {
     AsyncStorage.getItem("data").then((raw_data) => {
       console.log("Loaded Data: " + raw_data);
       const newAsset = bundleAsset();
+      let storage: AssetElement[];
       if (raw_data != null && raw_data != "[]") {
-        let storage: AssetElement[] = JSON.parse(raw_data);
+        storage = JSON.parse(raw_data);
         const existingIndex = storage.findIndex((obj) => obj.key === asset.key);
         if (existingIndex !== -1) storage[existingIndex] = newAsset;
         else storage.push(newAsset);
         console.log(
           "Index: " + existingIndex + " StorageNew : " + JSON.stringify(storage)
         );
-        AsyncStorage.setItem("data", JSON.stringify(storage));
       } else {
-        AsyncStorage.setItem("data", JSON.stringify([newAsset]));
+        storage = [newAsset];
         console.log("Initialized and Stored Data!");
       }
-      navigation.back();
+      AsyncStorage.setItem("data", JSON.stringify(storage));
+      router.push({
+        pathname: "/",
+        params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+      });
     });
   };
 

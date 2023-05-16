@@ -11,4 +11,10 @@ interface AssetElement {
   lastUpdate: string;
 }
 
-export { AssetElement, IconRes };
+interface TimelineElement {
+  key: string;
+  assets: AssetElement[];
+  date: string;
+}
+
+export { AssetElement, IconRes, TimelineElement };

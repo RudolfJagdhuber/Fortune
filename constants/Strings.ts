@@ -16,6 +16,12 @@ interface strings {
   errorValueInvalid: string;
   null: string;
   save: string;
+  savePoint: string;
+  savePointNew: string;
+  savePointEdit: string;
+  saveDescNew: string;
+  saveDescEdit: string;
+  date: string;
 }
 
 const de: strings = {
@@ -36,6 +42,14 @@ const de: strings = {
   errorValueInvalid: "Bitte eine gültige Zahl eingeben",
   null: "0",
   save: "Speichern",
+  savePoint: "Speicherpunkt",
+  savePointNew: "Neuer Speicherpunkt",
+  savePointEdit: "Speicherpunkt bearbeiten",
+  saveDescNew:
+    "Hierdurch wird ein neuer Eintrag mit allen aktuellen Werten zum angegebenen Datum gespeichert.",
+  saveDescEdit:
+    "Hier kann ein existierender Speicherpunkt bearbeitet oder gelöscht werden.",
+  date: "Datum",
 };
 
 const en: strings = {
@@ -56,6 +70,13 @@ const en: strings = {
   errorValueInvalid: "",
   null: "0",
   save: "Save",
+  savePoint: "Savepoint",
+  savePointNew: "New Savepoint",
+  savePointEdit: "Edit Savepoint",
+  saveDescNew:
+    "Here you can create a new savepoint with all current entries for a given date.",
+  saveDescEdit: "In this menu you can edit or delete an existing savepoint.",
+  date: "Date",
 };
 
 export default {

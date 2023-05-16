@@ -1,13 +1,17 @@
 import { AssetElement } from "../constants/Interfaces";
 
-// TODO
 const formatCurrency = (sum: number): string => {
   return sum.toLocaleString("en", { minimumFractionDigits: 2 }) + " €";
 };
 
+// TODO
+const formatDate = (date: Date): string => {
+  return date.toISOString();
+};
+
 const sumAssets = (
   data: AssetElement[],
-  which: "positive" | "negative" | "all"
+  which: "positive" | "negative" | "all" = "all"
 ): number => {
   return data
     .filter((elem) =>
@@ -22,4 +26,4 @@ const sumAssets = (
     }, 0);
 };
 
-export { formatCurrency, sumAssets };
+export { formatCurrency, formatDate, sumAssets };
