@@ -48,7 +48,7 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
       borderBottomLeftRadius: 20,
       borderWidth: 1,
       borderRightWidth: positive ? 1 : 0,
-      borderColor: positive ? col.positive : col.boxOutline,
+      borderColor: positive ? col.positive : col.boxOutlineNeutral,
       flex: 1,
     },
     switchLeftText: {
@@ -65,7 +65,7 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
       borderBottomRightRadius: 20,
       borderWidth: 1,
       borderLeftWidth: !positive ? 1 : 0,
-      borderColor: !positive ? col.negative : col.boxOutline,
+      borderColor: !positive ? col.negative : col.boxOutlineNeutral,
       flex: 1,
     },
     switchRightText: {

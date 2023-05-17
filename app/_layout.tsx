@@ -14,6 +14,7 @@ import {
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import { localeString } from "../components/Themed";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -59,6 +60,10 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="add" />
           <Stack.Screen name="save" />
+          <Stack.Screen
+            name="details"
+            options={{ title: localeString("savePoint") }}
+          />
         </Stack>
       </ThemeProvider>
     </>

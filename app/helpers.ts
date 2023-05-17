@@ -5,8 +5,8 @@ const formatCurrency = (sum: number): string => {
 };
 
 // TODO
-const formatDate = (date: Date): string => {
-  return date.toISOString();
+const formatDate = (date: Date | string): string => {
+  return new Date(date).toLocaleDateString();
 };
 
 const sumAssets = (

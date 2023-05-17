@@ -12,7 +12,7 @@ import uuid from "react-native-uuid";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { View, localeString } from "../components/Themed";
-import { AssetElement } from "../constants/Interfaces";
+import { AssetElement, TimelineElement } from "../constants/Interfaces";
 import { Stack, useSearchParams } from "expo-router";
 import Switch from "../components/Add/Switch";
 import TextInput from "../components/Add/TextInput";
@@ -22,7 +22,8 @@ import Colors from "../constants/Colors";
 
 export default () => {
   const router = useRouter();
-  const { data } = useSearchParams();
+  const { data, tlElemIndex } = useSearchParams();
+  const isTimelineElem = tlElemIndex && typeof tlElemIndex === "string";
   const isExisting = data && typeof data === "string";
   const asset: AssetElement = isExisting
     ? JSON.parse(data)
@@ -72,44 +73,90 @@ export default () => {
   });
 
   const deleteAsset = () => {
-    AsyncStorage.getItem("data").then((raw_data) => {
-      console.log("Loaded Data: " + raw_data);
-      let storage: AssetElement[];
-      if (raw_data != null && raw_data != "[]") {
-        storage = JSON.parse(raw_data);
-        storage = storage.filter((obj) => obj.key !== asset.key);
-        AsyncStorage.setItem("data", JSON.stringify(storage));
-      } else return;
-      router.push({
-        pathname: "/",
-        params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+    if (isTimelineElem) {
+      AsyncStorage.getItem("timeline").then((raw) => {
+        let storage: TimelineElement[];
+        if (raw != null) {
+          storage = JSON.parse(raw);
+          storage[+tlElemIndex].assets = storage[+tlElemIndex].assets.filter(
+            (obj) => obj.key !== asset.key
+          );
+          AsyncStorage.setItem("timeline", JSON.stringify(storage));
+        } else return;
+        router.push({
+          pathname: "/details",
+          params: {
+            tlElemIndex: tlElemIndex,
+            newDataMd5: Md5.hashStr(
+              JSON.stringify(storage[+tlElemIndex].assets)
+            ),
+            newTlMd5: Md5.hashStr(JSON.stringify(storage)),
+          },
+        });
       });
-    });
+    } else {
+      AsyncStorage.getItem("data").then((raw) => {
+        let storage: AssetElement[];
+        if (raw != null && raw != "[]") {
+          storage = JSON.parse(raw);
+          storage = storage.filter((obj) => obj.key !== asset.key);
+          AsyncStorage.setItem("data", JSON.stringify(storage));
+        } else return;
+        router.push({
+          pathname: "/",
+          params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+        });
+      });
+    }
   };
 
   const saveAsset = () => {
-    AsyncStorage.getItem("data").then((raw_data) => {
-      console.log("Loaded Data: " + raw_data);
-      const newAsset = bundleAsset();
-      let storage: AssetElement[];
-      if (raw_data != null && raw_data != "[]") {
-        storage = JSON.parse(raw_data);
-        const existingIndex = storage.findIndex((obj) => obj.key === asset.key);
-        if (existingIndex !== -1) storage[existingIndex] = newAsset;
-        else storage.push(newAsset);
-        console.log(
-          "Index: " + existingIndex + " StorageNew : " + JSON.stringify(storage)
-        );
-      } else {
-        storage = [newAsset];
-        console.log("Initialized and Stored Data!");
-      }
-      AsyncStorage.setItem("data", JSON.stringify(storage));
-      router.push({
-        pathname: "/",
-        params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+    if (isTimelineElem) {
+      AsyncStorage.getItem("timeline").then((raw) => {
+        const newAsset = bundleAsset();
+        let storage: TimelineElement[];
+        if (raw != null) {
+          storage = JSON.parse(raw);
+          if (storage[+tlElemIndex].assets.length > 0) {
+            const existingIndex = storage[+tlElemIndex].assets.findIndex(
+              (obj) => obj.key === asset.key
+            );
+            if (existingIndex !== -1)
+              storage[+tlElemIndex].assets[existingIndex] = newAsset;
+            else storage[+tlElemIndex].assets.push(newAsset);
+          } else storage[+tlElemIndex].assets = [newAsset];
+        } else return;
+        AsyncStorage.setItem("timeline", JSON.stringify(storage));
+        router.push({
+          pathname: "/details",
+          params: {
+            tlElemIndex: tlElemIndex,
+            newDataMd5: Md5.hashStr(
+              JSON.stringify(storage[+tlElemIndex].assets)
+            ),
+            newTlMd5: Md5.hashStr(JSON.stringify(storage)),
+          },
+        });
       });
-    });
+    } else {
+      AsyncStorage.getItem("data").then((raw) => {
+        const newAsset = bundleAsset();
+        let storage: AssetElement[];
+        if (raw != null && raw != "[]") {
+          storage = JSON.parse(raw);
+          const existingIndex = storage.findIndex(
+            (obj) => obj.key === asset.key
+          );
+          if (existingIndex !== -1) storage[existingIndex] = newAsset;
+          else storage.push(newAsset);
+        } else storage = [newAsset];
+        AsyncStorage.setItem("data", JSON.stringify(storage));
+        router.push({
+          pathname: "/",
+          params: { newDataMd5: Md5.hashStr(JSON.stringify(storage)) },
+        });
+      });
+    }
   };
 
   return (

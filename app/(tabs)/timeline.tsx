@@ -14,6 +14,7 @@ import { AssetElement, TimelineElement } from "../../constants/Interfaces";
 import { useRouter, useSearchParams } from "expo-router";
 import Overview from "../../components/Timeline/Overview";
 import uuid from "react-native-uuid";
+import ListElement from "../../components/Timeline/ListElement";
 
 export default function TimelineScreen() {
   const [isLoading, setLoading] = useState(false);
@@ -46,10 +47,9 @@ export default function TimelineScreen() {
 
   if (!isLoading) {
     if (data && dataTL) {
-      console.log("TL Has data: " + JSON.stringify(data));
-      console.log("Old: " + Md5.hashStr(JSON.stringify(dataTL)));
-      console.log("New: " + newTlMd5);
-      if (newTlMd5 && newTlMd5 !== Md5.hashStr(JSON.stringify(dataTL))) {
+      const oldTlMd5 = Md5.hashStr(JSON.stringify(dataTL));
+      console.log("OldTL: " + oldTlMd5 + "  -  NewTL: " + newTlMd5);
+      if (newTlMd5 && newTlMd5 !== oldTlMd5) {
         setLoading(true);
         console.log("TL Re-Loading!");
         loadData();
@@ -70,7 +70,6 @@ export default function TimelineScreen() {
           <View style={styles.container}>
             <SumHeader
               sum={sumAssets(data, "all")}
-              date="24.01.2023"
               savePress={() => {
                 const timelineElem: TimelineElement = {
                   key: uuid.v4().toString(),
@@ -93,8 +92,17 @@ export default function TimelineScreen() {
             <View style={{ height: 16 }} />
             <ScrollView>
               <Text style={styles.header}>{localeString("timeline")}</Text>
-              {dataTL.map((elem) => (
-                <Text key={elem.key}>{elem.date}</Text>
+              {dataTL.map((elem, idx) => (
+                <ListElement
+                  key={elem.key}
+                  data={elem}
+                  onPress={() => {
+                    router.push({
+                      pathname: "/details",
+                      params: { tlElemIndex: idx.toString() },
+                    });
+                  }}
+                />
               ))}
               <View style={{ height: 40 }} />
             </ScrollView>

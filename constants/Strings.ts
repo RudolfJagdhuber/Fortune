@@ -22,6 +22,7 @@ interface strings {
   saveDescNew: string;
   saveDescEdit: string;
   date: string;
+  current: string;
 }
 
 const de: strings = {
@@ -50,6 +51,7 @@ const de: strings = {
   saveDescEdit:
     "Hier kann ein existierender Speicherpunkt bearbeitet oder gelöscht werden.",
   date: "Datum",
+  current: "Aktueller Stand",
 };
 
 const en: strings = {
@@ -77,6 +79,7 @@ const en: strings = {
     "Here you can create a new savepoint with all current entries for a given date.",
   saveDescEdit: "In this menu you can edit or delete an existing savepoint.",
   date: "Date",
+  current: "Current Status",
 };
 
 export default {

@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  useColorScheme,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import Colors from "../../constants/Colors";
 import { localeString, Text, View } from "../Themed";
@@ -24,21 +17,29 @@ export default ({
   date: Date;
   setDate: (date: Date) => void;
 }) => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const styles = makeStyles(Colors[useColorScheme() ?? "light"]);
 
   return (
     <View>
       <Text style={styles.header}>{localeString(titleRes)}</Text>
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => setDatePickerVisibility(true)}
+      >
         <FontAwesome name={"calendar"} size={20} style={styles.icon} />
-        <DateTimePicker
-          value={date}
-          mode="date"
-          onChange={(event: DateTimePickerEvent, date?: Date) => {
-            if (date) setDate(date);
-          }}
-        />
-      </View>
+        <Text>{formatDate(date)}</Text>
+      </TouchableOpacity>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        date={date}
+        onConfirm={(date: Date) => {
+          setDatePickerVisibility(false);
+          setDate(date);
+        }}
+        onCancel={() => setDatePickerVisibility(false)}
+      />
     </View>
   );
 };

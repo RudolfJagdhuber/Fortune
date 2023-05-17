@@ -18,6 +18,7 @@ import SaveButton from "../components/SaveButton";
 import Colors from "../constants/Colors";
 import { formatCurrency, sumAssets } from "./helpers";
 import DateInput from "../components/Save/DateInput";
+import SummaryWithBar from "../components/Save/SummaryWithBar";
 
 export default () => {
   const router = useRouter();
@@ -113,8 +114,8 @@ export default () => {
           <Text style={styles.sumText}>
             {formatCurrency(sumAssets(tlElem.assets))}
           </Text>
-          {/* <SummaryBar /> */}
-          {/* <SummaryBar /> */}
+          <SummaryWithBar assets={tlElem.assets} />
+          <SummaryWithBar assets={tlElem.assets} negative={true} />
         </ScrollView>
         <View style={styles.btnSaveContainer}>
           <SaveButton onPress={saveTimeline} />
@@ -165,5 +166,6 @@ const makeStyles = (col: typeof Colors.light) =>
       fontFamily: "Inter_700Bold",
       fontSize: 32,
       marginTop: 8,
+      marginBottom: 16,
     },
   });
