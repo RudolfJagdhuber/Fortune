@@ -34,9 +34,9 @@ export default ({
         isVisible={isDatePickerVisible}
         mode="date"
         date={date}
-        onConfirm={(date: Date) => {
+        onConfirm={(newDate: Date) => {
           setDatePickerVisibility(false);
-          setDate(date);
+          setDate(newDate);
         }}
         onCancel={() => setDatePickerVisibility(false)}
       />

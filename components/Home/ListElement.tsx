@@ -22,10 +22,14 @@ export default ({
         <View style={styles.iconContainer}>
           <FontAwesome name={data.icon} size={20} style={styles.icon} />
         </View>
-        <View style={{ flex: 1, backgroundColor: "#00000000" }}>
-          <Text style={styles.titleText}>{data.title}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.titleText} numberOfLines={1}>
+            {data.title}
+          </Text>
           {data.description && (
-            <Text style={styles.subtitleText}>{data.description}</Text>
+            <Text style={styles.subtitleText} numberOfLines={2}>
+              {data.description}
+            </Text>
           )}
         </View>
         <Text
@@ -68,6 +72,10 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
     subtitleText: {
       fontSize: 12,
       color: col.textLight,
+    },
+    textContainer: {
+      flex: 1,
+      backgroundColor: "transparent",
     },
     titleText: {
       fontFamily: "Inter_700Bold",

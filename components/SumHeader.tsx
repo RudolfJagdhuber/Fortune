@@ -19,12 +19,14 @@ export default ({
   savePress: () => void;
 }) => {
   const [pickerVisible, setPickerVisible] = useState(false);
-  const styles = makeStyles(Colors[useColorScheme() ?? "light"]);
+  const styles = makeStyles(Colors[useColorScheme() ?? "light"], sum);
   return (
     <View style={styles.outerContainer}>
       <View style={{ flex: 1 }}>
         <Text style={styles.sumText}>{localeString("sumBalance")}</Text>
-        <Text style={styles.valueText}>{formatCurrency(sum)}</Text>
+        <Text style={styles.valueText} numberOfLines={1}>
+          {formatCurrency(sum)}
+        </Text>
         <TouchableOpacity
           style={styles.dateContainer}
           disabled={!date}
@@ -52,7 +54,7 @@ export default ({
   );
 };
 
-const makeStyles = (col: typeof Colors.light) =>
+const makeStyles = (col: typeof Colors.light, value: number) =>
   StyleSheet.create({
     dateContainer: {
       flexDirection: "row",
@@ -75,7 +77,7 @@ const makeStyles = (col: typeof Colors.light) =>
     },
     valueText: {
       marginTop: 4,
-      fontSize: 32,
+      fontSize: value < 10000000 ? 32 : 24,
       fontFamily: "Inter_700Bold",
     },
   });

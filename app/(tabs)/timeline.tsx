@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -22,7 +23,7 @@ export default function TimelineScreen() {
   const [dataTL, setDataTL] = useState<TimelineElement[]>();
 
   const router = useRouter();
-  const { newTlMd5 } = useSearchParams();
+  const { newDataMd5, newTlMd5 } = useSearchParams();
 
   const loadData = () => {
     console.log("TL Load triggered!");
@@ -48,8 +49,13 @@ export default function TimelineScreen() {
   if (!isLoading) {
     if (data && dataTL) {
       const oldTlMd5 = Md5.hashStr(JSON.stringify(dataTL));
+      const oldDataMd5 = Md5.hashStr(JSON.stringify(data));
       console.log("OldTL: " + oldTlMd5 + "  -  NewTL: " + newTlMd5);
-      if (newTlMd5 && newTlMd5 !== oldTlMd5) {
+      console.log("OldTLData: " + oldDataMd5 + "  -  NewTLData: " + newDataMd5);
+      if (
+        (newTlMd5 && newTlMd5 !== oldTlMd5) ||
+        (newDataMd5 && newDataMd5 !== oldDataMd5)
+      ) {
         setLoading(true);
         console.log("TL Re-Loading!");
         loadData();
@@ -116,13 +122,13 @@ export default function TimelineScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: Platform.OS === "android" ? 64 : 40,
   },
   header: {
     fontFamily: "Inter_600SemiBold",
     fontSize: 16,
     marginTop: 24,
-    marginBottom: 24,
+    marginBottom: 16,
     marginHorizontal: 24,
   },
 });

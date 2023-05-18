@@ -14,11 +14,11 @@ const computeBarRatio = (assets: AssetElement[], negative: boolean): number => {
   if (negative) {
     if (neg === 0) return MIN;
     if (neg > pos) return 1;
-    return neg / (pos + neg);
+    return Math.max(neg / (pos + neg), MIN);
   } else {
     if (pos === 0) return MIN;
     if (pos > neg) return 1;
-    return pos / (pos + neg);
+    return Math.max(pos / (pos + neg), MIN);
   }
 };
 
@@ -50,11 +50,13 @@ export default ({
           <View style={styles.emptyBar} />
         ) : data.length === 1 ? (
           <View style={styles.singleBar}>
-            <FontAwesome
-              name={data[0].icon}
-              size={height / 2}
-              style={styles.icon}
-            />
+            {(Math.abs(data[0].value) / sum) * barRatio > MIN_PERC && (
+              <FontAwesome
+                name={data[0].icon}
+                size={height / 2}
+                style={styles.icon}
+              />
+            )}
           </View>
         ) : (
           <View style={{ flex: 1, flexDirection: "row" }}>
@@ -147,10 +149,10 @@ const makeStyles = (
     },
     emptyBar: {
       flex: 1,
-      backgroundColor: col.boxNeutral,
+      backgroundColor: negative ? col.negative : col.positive,
       borderRadius: 4,
       borderWidth: 1,
-      borderColor: col.boxOutlineNeutral,
+      borderColor: col.barOutline,
     },
     icon: {
       color: col.background,
@@ -159,15 +161,14 @@ const makeStyles = (
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: negative ? col.boxNegative : col.boxPositive,
-      borderRadius: 4,
+      backgroundColor: negative ? col.negative : col.positive,
+      borderColor: col.barOutline,
       borderWidth: 1,
-      borderColor: negative ? col.boxOutlineNegative : col.boxOutlinePositive,
+      borderRadius: 4,
     },
     sumText: {
       fontSize: height * 0.666,
       marginStart: 8,
-      marginTop: 1,
       fontFamily: "Inter_600SemiBold",
       color: negative ? col.negative : col.positive,
     },

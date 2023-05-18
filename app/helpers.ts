@@ -8,9 +8,9 @@ const formatCurrency = (sum: number): string => {
 const formatDate = (date: Date | string): string => {
   if (typeof date === "string") date = new Date(date);
   return (
-    date.getDay() +
+    date.getDate() +
     ". " +
-    localeString("monthName", date.getMonth() - 1) +
+    localeString("monthName", date.getMonth()) +
     " " +
     date.getFullYear()
   );

@@ -14,7 +14,7 @@ interface strings {
   icon: string;
   errorTitleMissing: string;
   errorValueInvalid: string;
-  null: string;
+  errorValueLarge: string;
   save: string;
   savePoint: string;
   savePointNew: string;
@@ -24,6 +24,7 @@ interface strings {
   date: string;
   current: string;
   monthName: string[];
+  noData: string;
 }
 
 const de: strings = {
@@ -42,7 +43,7 @@ const de: strings = {
   icon: "Symbol",
   errorTitleMissing: "Ein Titel wird benötigt",
   errorValueInvalid: "Bitte eine gültige Zahl eingeben",
-  null: "0",
+  errorValueLarge: "Die Summe ist zu groß",
   save: "Speichern",
   savePoint: "Speicherpunkt",
   savePointNew: "Neuer Speicherpunkt",
@@ -58,6 +59,7 @@ const de: strings = {
     "Februar",
     "März",
     "April",
+    "Mai",
     "Juni",
     "Juli",
     "August",
@@ -66,6 +68,7 @@ const de: strings = {
     "November",
     "Dezember",
   ],
+  noData: "(Keine Daten vorhanden)",
 };
 
 const en: strings = {
@@ -82,9 +85,9 @@ const en: strings = {
   descriptionHelper: "Please enter a description",
   value: "Value",
   icon: "Icon",
-  errorTitleMissing: "",
-  errorValueInvalid: "",
-  null: "0",
+  errorTitleMissing: "A title is required",
+  errorValueInvalid: "Please enter a valid number",
+  errorValueLarge: "The value is too large",
   save: "Save",
   savePoint: "Savepoint",
   savePointNew: "New Savepoint",
@@ -99,6 +102,7 @@ const en: strings = {
     "February",
     "March",
     "April",
+    "May",
     "June",
     "July",
     "August",
@@ -107,6 +111,7 @@ const en: strings = {
     "November",
     "December",
   ],
+  noData: "< No Data available >",
 };
 
 export default {

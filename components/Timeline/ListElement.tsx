@@ -17,7 +17,7 @@ export default ({
 }) => {
   const styles = makeStyles(Colors[useColorScheme() ?? "light"]);
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity style={styles.outerContainer} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.dateText}>{formatDate(data.date)}</Text>
@@ -59,6 +59,9 @@ const makeStyles = (col: typeof Colors.light) =>
       flexDirection: "row",
       backgroundColor: "transparent",
       marginBottom: 4,
+    },
+    outerContainer: {
+      marginVertical: 8,
     },
     valueText: {
       fontFamily: "Inter_700Bold",

@@ -116,6 +116,7 @@ export default () => {
           </Text>
           <SummaryWithBar assets={tlElem.assets} />
           <SummaryWithBar assets={tlElem.assets} negative={true} />
+          <View style={{ height: 40 }} />
         </ScrollView>
         <View style={styles.btnSaveContainer}>
           <SaveButton onPress={saveTimeline} />

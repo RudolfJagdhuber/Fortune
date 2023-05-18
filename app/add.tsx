@@ -19,11 +19,14 @@ import TextInput from "../components/Add/TextInput";
 import IconSelector from "../components/Add/IconSelector";
 import SaveButton from "../components/SaveButton";
 import Colors from "../constants/Colors";
+import Strings from "../constants/Strings";
+import CurrencyInput from "../components/Add/CurrencyInput";
 
 export default () => {
   const router = useRouter();
   const { data, tlElemIndex } = useSearchParams();
-  const isTimelineElem = tlElemIndex && typeof tlElemIndex === "string";
+  const isTimelineElem =
+    tlElemIndex && typeof tlElemIndex === "string" && tlElemIndex !== "-1";
   const isExisting = data && typeof data === "string";
   const asset: AssetElement = isExisting
     ? JSON.parse(data)
@@ -43,7 +46,7 @@ export default () => {
   const [valueText, setValueText] = useState(
     asset.value != 0 ? Math.abs(asset.value).toString() : ""
   );
-  const [hasValueError, setValueError] = useState(false);
+  const [valueError, setValueError] = useState<keyof typeof Strings.de>();
   const [icon, setIcon] = useState(asset.icon);
 
   const updateTitle = (text: string) => {
@@ -52,6 +55,9 @@ export default () => {
   };
 
   const updateValue = (text: string) => {
+    // Reduce to only number and decimal characters
+    text = text.replace(/[^\d\.,]/g, "");
+
     const text2 = text
       .replace(/^0+/, "")
       .replace(",", ".")
@@ -59,7 +65,13 @@ export default () => {
       .replace(/^(\d+\.\d{2}).*/, "$1");
 
     setValueText(text2);
-    setValueError(isNaN(+text2));
+    setValueError(
+      isNaN(+text2)
+        ? "errorValueInvalid"
+        : Math.abs(+text2) > 10000000000
+        ? "errorValueLarge"
+        : undefined
+    );
     if (!isNaN(+text2)) setValue(Math.abs(+text2) * (isPositive ? 1 : -1));
   };
 
@@ -111,9 +123,9 @@ export default () => {
   };
 
   const saveAsset = () => {
+    const newAsset = bundleAsset();
     if (isTimelineElem) {
       AsyncStorage.getItem("timeline").then((raw) => {
-        const newAsset = bundleAsset();
         let storage: TimelineElement[];
         if (raw != null) {
           storage = JSON.parse(raw);
@@ -140,15 +152,16 @@ export default () => {
       });
     } else {
       AsyncStorage.getItem("data").then((raw) => {
-        const newAsset = bundleAsset();
         let storage: AssetElement[];
         if (raw != null && raw != "[]") {
           storage = JSON.parse(raw);
           const existingIndex = storage.findIndex(
             (obj) => obj.key === asset.key
           );
+          console.log("Index: : " + existingIndex);
           if (existingIndex !== -1) storage[existingIndex] = newAsset;
           else storage.push(newAsset);
+          console.log("storage: " + JSON.stringify(storage));
         } else storage = [newAsset];
         AsyncStorage.setItem("data", JSON.stringify(storage));
         router.push({
@@ -198,20 +211,19 @@ export default () => {
             text={description}
             setText={setDescription}
           />
-          <TextInput
+          <CurrencyInput
             titleRes="value"
-            descriptionRes="null"
-            text={valueText}
-            setText={updateValue}
-            isMoney={true}
+            value={valueText}
+            setValue={updateValue}
             isPositive={isPositive}
-            errorRes={hasValueError ? "errorValueInvalid" : undefined}
+            errorRes={valueError}
           />
           <IconSelector icon={icon} setIcon={setIcon} />
+          <View style={{ height: 40 }} />
         </ScrollView>
         <View style={styles.btnSaveContainer}>
           <SaveButton
-            active={!hasTitleError && !hasValueError}
+            active={!hasTitleError && !valueError}
             onPress={saveAsset}
           />
         </View>
@@ -231,8 +243,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btnSaveContainer: {
-    marginBottom: 24,
-    marginTop: 8,
+    marginBottom: 16,
+    marginTop: 16,
     marginHorizontal: 24,
   },
   container: {

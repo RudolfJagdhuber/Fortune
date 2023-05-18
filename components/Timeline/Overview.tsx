@@ -45,13 +45,13 @@ const makeStyles = (col: typeof Colors.light, sumPos: number, sumNeg: number) =>
     },
     valueNegText: {
       marginTop: 8,
-      fontSize: 20,
+      fontSize: Math.max(Math.abs(sumNeg), sumPos) >= 10000000 ? 14 : 20,
       fontFamily: "Inter_700Bold",
       color: sumNeg === 0 ? col.textLight : col.negative,
     },
     valuePosText: {
       marginTop: 8,
-      fontSize: 20,
+      fontSize: Math.max(Math.abs(sumNeg), sumPos) >= 10000000 ? 14 : 20,
       fontFamily: "Inter_700Bold",
       color: sumPos === 0 ? col.textLight : col.positive,
     },

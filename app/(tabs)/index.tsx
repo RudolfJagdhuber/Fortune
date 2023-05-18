@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, SafeAreaView } from "react-native";
+import { ActivityIndicator, Platform, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Md5 } from "ts-md5";
 import { View } from "../../components/Themed";
@@ -51,7 +51,11 @@ export default () => {
         {isLoading || !tlElem ? (
           <ActivityIndicator style={{ flex: 1 }} />
         ) : (
-          <AssetsPage tlElem={tlElem} />
+          <View
+            style={{ flex: 1, marginTop: Platform.OS === "android" ? 24 : 0 }}
+          >
+            <AssetsPage tlElem={tlElem} />
+          </View>
         )}
       </SafeAreaView>
     </View>
