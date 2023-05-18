@@ -4,13 +4,17 @@
  */
 
 import {
+  NativeModules,
+  Platform,
   Text as DefaultText,
   useColorScheme,
   View as DefaultView,
 } from "react-native";
+import { getLocales } from "expo-localization";
 
 import Colors from "../constants/Colors";
 import Strings from "../constants/Strings";
+import { Langs, LangsList } from "../constants/Interfaces";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -26,11 +30,11 @@ export function useThemeColor(
   }
 }
 
-export function localeString(stringName: keyof typeof Strings.de) {
-  // TODO
-  const locale = "de";
-
-  return Strings[locale ?? "en"][stringName];
+export function localeString(stringName: keyof typeof Strings.de, idx = 0) {
+  const locale = getLocales()[0].languageCode;
+  const lang: Langs = LangsList.includes(locale) ? (locale as Langs) : "en";
+  const str = Strings[lang][stringName];
+  return Array.isArray(str) ? str[idx] : str;
 }
 
 type ThemeProps = {

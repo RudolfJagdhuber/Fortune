@@ -1,12 +1,19 @@
+import { localeString } from "../components/Themed";
 import { AssetElement } from "../constants/Interfaces";
 
 const formatCurrency = (sum: number): string => {
   return sum.toLocaleString("en", { minimumFractionDigits: 2 }) + " €";
 };
 
-// TODO
 const formatDate = (date: Date | string): string => {
-  return new Date(date).toLocaleDateString();
+  if (typeof date === "string") date = new Date(date);
+  return (
+    date.getDay() +
+    ". " +
+    localeString("monthName", date.getMonth() - 1) +
+    " " +
+    date.getFullYear()
+  );
 };
 
 const sumAssets = (

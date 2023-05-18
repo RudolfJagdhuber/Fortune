@@ -23,6 +23,7 @@ interface strings {
   saveDescEdit: string;
   date: string;
   current: string;
+  monthName: string[];
 }
 
 const de: strings = {
@@ -52,6 +53,19 @@ const de: strings = {
     "Hier kann ein existierender Speicherpunkt bearbeitet oder gelöscht werden.",
   date: "Datum",
   current: "Aktueller Stand",
+  monthName: [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
+  ],
 };
 
 const en: strings = {
@@ -80,6 +94,19 @@ const en: strings = {
   saveDescEdit: "In this menu you can edit or delete an existing savepoint.",
   date: "Date",
   current: "Current Status",
+  monthName: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
 };
 
 export default {

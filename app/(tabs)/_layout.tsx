@@ -5,6 +5,7 @@ import { useColorScheme } from "react-native";
 import Colors from "../../constants/Colors";
 import { IconRes } from "../../constants/Interfaces";
 import Strings from "../../constants/Strings";
+import { localeString } from "../../components/Themed";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -15,7 +16,6 @@ function TabBarIcon(props: { name: IconRes; color: string }) {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const locale = "de";
 
   return (
     <Tabs
@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: Strings[locale ?? "en"].home,
+          title: localeString("home"),
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerShown: false,
         }}
@@ -34,7 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="timeline"
         options={{
-          title: Strings[locale ?? "en"].timeline,
+          title: localeString("home"),
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="area-chart" color={color} />
           ),
