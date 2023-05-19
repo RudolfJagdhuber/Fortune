@@ -16,9 +16,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "de.datavisions.assetoverview",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "de.datavisions.assetoverview",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#f1f1f1"
@@ -30,6 +34,11 @@
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7cccbc6d-a1fd-4848-bcf7-542d142ffbb6"
+      }
+    }
   }
 }

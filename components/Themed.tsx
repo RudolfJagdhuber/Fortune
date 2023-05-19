@@ -4,8 +4,6 @@
  */
 
 import {
-  NativeModules,
-  Platform,
   Text as DefaultText,
   useColorScheme,
   View as DefaultView,
