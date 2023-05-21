@@ -16,12 +16,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "de.datavisions.assetoverview",
+      "bundleIdentifier": "de.datavisions.fortune",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "de.datavisions.assetoverview",
+      "package": "de.datavisions.fortune",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
