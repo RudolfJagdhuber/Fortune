@@ -111,7 +111,7 @@ const en: strings = {
     "November",
     "December",
   ],
-  noData: "< No Data available >",
+  noData: "(No Data available)",
 };
 
 export default {

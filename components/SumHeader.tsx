@@ -38,7 +38,11 @@ export default ({
         </TouchableOpacity>
       </View>
       {!date && (
-        <IconButton iconRes="save" label="Speichern" onPress={savePress} />
+        <IconButton
+          iconRes="save"
+          label={localeString("save")}
+          onPress={savePress}
+        />
       )}
       <DateTimePickerModal
         isVisible={pickerVisible}

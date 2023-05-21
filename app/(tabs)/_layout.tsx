@@ -34,10 +34,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="timeline"
         options={{
-          title: localeString("home"),
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="area-chart" color={color} />
-          ),
+          title: localeString("timeline"),
+          tabBarIcon: ({ color }) => <TabBarIcon name="tasks" color={color} />,
           headerShown: false,
         }}
       />
