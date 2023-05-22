@@ -18,5 +18,3 @@ web-build/
 
 # Others
 .vscode/
-secrets.ts
-builds/
