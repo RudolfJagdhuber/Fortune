@@ -1,8 +1,6 @@
 # Fortune Mobile App <img src="https://github.com/RudolfJagdhuber/Fortune/assets/42039093/01d1105a-bb09-4e68-93e2-d2921203fdb8" align="right" height = 120/>
 
-Repository of the iOS and Android App `Fortune`, which is currently 
-available at: 
-* https://play.google.com/store/apps/details?id=de.datavisions.fortune
+Repository of the iOS and Android App `Fortune`.
 
 Fortune is a small react-native app that helps you keep track of all 
 your assets and liabilities. It is free, without ads, fully offline
