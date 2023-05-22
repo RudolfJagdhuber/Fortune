@@ -1,5 +1,5 @@
 import { localeString } from "../components/Themed";
-import { AssetElement } from "../constants/Interfaces";
+import { AssetElement, TimelineElement } from "../constants/Interfaces";
 
 const formatCurrency = (sum: number): string => {
   return sum.toLocaleString("en", { minimumFractionDigits: 2 }) + " €";
@@ -14,6 +14,10 @@ const formatDate = (date: Date | string): string => {
     " " +
     date.getFullYear()
   );
+};
+
+const sortTL = (a: TimelineElement, b: TimelineElement): number => {
+  return Date.parse(b.date) - Date.parse(a.date);
 };
 
 const sumAssets = (
@@ -33,4 +37,4 @@ const sumAssets = (
     }, 0);
 };
 
-export { formatCurrency, formatDate, sumAssets };
+export { formatCurrency, formatDate, sortTL, sumAssets };

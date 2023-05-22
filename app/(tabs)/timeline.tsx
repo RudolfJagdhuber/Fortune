@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Md5 } from "ts-md5";
-import { sumAssets } from "../helpers";
+import { sortTL, sumAssets } from "../helpers";
 import SumHeader from "../../components/SumHeader";
 import { Text, View, localeString } from "../../components/Themed";
 import { AssetElement, TimelineElement } from "../../constants/Interfaces";
@@ -98,14 +98,19 @@ export default function TimelineScreen() {
             <View style={{ height: 16 }} />
             <ScrollView>
               <Text style={styles.header}>{localeString("timeline")}</Text>
-              {dataTL.map((elem, idx) => (
+              {[...dataTL].sort(sortTL).map((elem, idx) => (
                 <ListElement
                   key={elem.key}
                   data={elem}
                   onPress={() => {
                     router.push({
                       pathname: "/details",
-                      params: { tlElemIndex: idx.toString() },
+                      params: {
+                        tlElemIndex: dataTL
+                          .map((e) => e.key)
+                          .indexOf(elem.key)
+                          .toString(),
+                      },
                     });
                   }}
                 />

@@ -77,7 +77,11 @@ export default () => {
       AsyncStorage.setItem("timeline", JSON.stringify(storage));
       setTlElem(newTlElem);
       setLoading(false);
-      router.setParams({ newTlMd5: Md5.hashStr(JSON.stringify(storage)) });
+      router.push({
+        pathname: "/",
+        params: { newTlMd5: Md5.hashStr(JSON.stringify(storage)) },
+      });
+      // router.setParams({ newTlMd5: Md5.hashStr(JSON.stringify(storage)) });
     });
   };
 
