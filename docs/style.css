@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+/*--------------------------------------------------------------
+# General headers etc
+--------------------------------------------------------------*/
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
+.navbar img{
+  height: 24pt; 
+  margin-left: 40pt;
+}
+
+.navbar li {
+  padding-right: 40pt;
+}
+
+.nav-link {
+  font-size: 1.1em !important;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.nav-link:hover {
+  font-size: 1.1em !important;
+  font-weight: 400;
+}
+
+h1 {
+  margin-top: 40pt; 
+  margin-bottom: 16pt;
+}
+
+hr {
+  border-top: 2px solid #b4b4b4;
+  margin-top: 40pt;
+}
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
