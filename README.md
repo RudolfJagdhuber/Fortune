@@ -11,7 +11,7 @@ data stays on your phone.
 
 The full source code is shared in this repository. 
 
-![screenshots](https://github.com/RudolfJagdhuber/Fortune/assets/42039093/9b60270a-fefa-48a6-919a-be80ae0caf17)
+![combined screenshots](https://github.com/RudolfJagdhuber/Fortune/assets/42039093/dc7ee4d6-2983-43b4-8298-0e9117615695)
 
 ## Further Info
 I created this app to have a simple tool to know what I own and to
