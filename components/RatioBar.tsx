@@ -37,6 +37,7 @@ export default ({
   const data = assets.filter((x) => (negative ? x.value < 0 : x.value > 0));
   const sum = Math.abs(sumAssets(data));
   const barRatio = computeBarRatio(assets, negative);
+  const iconSize = height / 2.25;
   const styles = makeStyles(
     Colors[useColorScheme() ?? "light"],
     height,
@@ -45,7 +46,7 @@ export default ({
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: barRatio }}>
+      <View style={{ flex: barRatio, backgroundColor: "transparent" }}>
         {data.length === 0 ? (
           <View style={styles.emptyBar} />
         ) : data.length === 1 ? (
@@ -53,18 +54,18 @@ export default ({
             {(Math.abs(data[0].value) / sum) * barRatio > MIN_PERC && (
               <FontAwesome
                 name={data[0].icon}
-                size={height / 2}
+                size={iconSize}
                 style={styles.icon}
               />
             )}
           </View>
         ) : (
-          <View style={{ flex: 1, flexDirection: "row" }}>
+          <View style={styles.multiBarContainer}>
             <View style={[styles.barStart, { flex: Math.abs(data[0].value) }]}>
               {(Math.abs(data[0].value) / sum) * barRatio > MIN_PERC && (
                 <FontAwesome
                   name={data[0].icon}
-                  size={height / 2}
+                  size={iconSize}
                   style={styles.icon}
                 />
               )}
@@ -77,7 +78,7 @@ export default ({
                 {(Math.abs(asset.value) / sum) * barRatio > MIN_PERC && (
                   <FontAwesome
                     name={asset.icon}
-                    size={height / 2}
+                    size={iconSize}
                     style={styles.icon}
                   />
                 )}
@@ -93,7 +94,7 @@ export default ({
                 MIN_PERC && (
                 <FontAwesome
                   name={data[data.length - 1].icon}
-                  size={height / 2}
+                  size={iconSize}
                   style={styles.icon}
                 />
               )}
@@ -118,9 +119,6 @@ const makeStyles = (
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: negative ? col.negative : col.positive,
-      borderColor: col.barOutline,
-      borderWidth: 1,
-      borderEndWidth: 0,
       borderTopStartRadius: 4,
       borderBottomStartRadius: 4,
     },
@@ -128,19 +126,16 @@ const makeStyles = (
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: negative ? col.negative : col.positive,
-      borderColor: col.barOutline,
-      borderWidth: 1,
-      borderEndWidth: 0,
+      marginStart: 1,
     },
     barEnd: {
       minWidth: 6,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: negative ? col.negative : col.positive,
-      borderColor: col.barOutline,
-      borderWidth: 1,
       borderTopEndRadius: 4,
       borderBottomEndRadius: 4,
+      marginStart: 1,
     },
     container: {
       flexDirection: "row",
@@ -151,19 +146,20 @@ const makeStyles = (
       flex: 1,
       backgroundColor: negative ? col.negative : col.positive,
       borderRadius: 4,
-      borderWidth: 1,
-      borderColor: col.barOutline,
     },
     icon: {
       color: col.background,
+    },
+    multiBarContainer: {
+      flex: 1,
+      flexDirection: "row",
+      backgroundColor: "transparent",
     },
     singleBar: {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: negative ? col.negative : col.positive,
-      borderColor: col.barOutline,
-      borderWidth: 1,
       borderRadius: 4,
     },
     sumText: {

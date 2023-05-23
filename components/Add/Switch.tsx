@@ -48,12 +48,12 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
       borderBottomLeftRadius: 20,
       borderWidth: 1,
       borderRightWidth: positive ? 1 : 0,
-      borderColor: positive ? col.positive : col.boxOutlineNeutral,
+      borderColor: col.background, //positive ? col.positive : col.boxOutlineNeutral,
       flex: 1,
     },
     switchLeftText: {
       fontFamily: positive ? "Inter_700Bold" : "Inter_600SemiBold",
-      color: positive ? col.positive : col.textLight,
+      color: positive ? col.buttonPrimaryContent : col.textLight,
       fontSize: 13,
     },
     switchRight: {
@@ -65,12 +65,12 @@ const makeStyles = (col: typeof Colors.light, positive: boolean) =>
       borderBottomRightRadius: 20,
       borderWidth: 1,
       borderLeftWidth: !positive ? 1 : 0,
-      borderColor: !positive ? col.negative : col.boxOutlineNeutral,
+      borderColor: col.background, //positive ? col.positive : col.boxOutlineNeutral,
       flex: 1,
     },
     switchRightText: {
       fontFamily: !positive ? "Inter_700Bold" : "Inter_600SemiBold",
-      color: !positive ? col.negative : col.textLight,
+      color: !positive ? col.buttonPrimaryContent : col.textLight,
       fontSize: 13,
     },
     touchable: {
