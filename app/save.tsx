@@ -138,8 +138,8 @@ const makeStyles = (col: typeof Colors.light) =>
       alignItems: "center",
     },
     btnSaveContainer: {
-      marginBottom: 24,
-      marginTop: 8,
+      marginBottom: 16,
+      marginTop: 16,
       marginHorizontal: 24,
     },
     container: {
